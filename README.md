@@ -1,8 +1,23 @@
-Model Service Api
-Example The ML service is a web application that provides an API for interacting with a machine learning model. It allows users to send queries with prediction data and get results back.
-Startup logic:
-When launched, the application initializes FastAPI, which handles HTTP requests. The app also connects to the machine learning model and loads it into memory for use in making predictions.
+# 🧠 Model Service API
 
+This project is an example ML service — a web application that provides an API for interacting with a machine learning model.  
+Users can send requests containing input data and receive model predictions in response.
+
+---
+
+## 🚀 Startup Logic
+
+When launched:
+
+- The application initializes a **FastAPI** server to handle HTTP requests.
+- It connects to the **machine learning model**, loading it into memory for inference.
+- Routes are defined for predictions and health checks.
+
+---
+
+## 📁 Project Structure
+
+```
 .
 ├── .docker
 │   └── Dockerfile              # Dockerfile for building the container image
@@ -13,42 +28,46 @@ When launched, the application initializes FastAPI, which handles HTTP requests.
     ├── app.py                  # Main application file, initializes FastAPI
     ├── api                     # Package with API routes
     │   ├── __init__.py         # Package initializer
-    │   ├── routes              # Package with API route handlers
-    │   │   ├── __init__.py     # Route package initializer
-    │   │   ├── healthcheck.py  # Route for service health check
-    │   │   ├── predict.py      # Route for model predictions
+    │   ├── routes              # API route handlers
+    │   │   ├── __init__.py
+    │   │   ├── healthcheck.py  # Health check route
+    │   │   ├── predict.py      # Prediction route
     │   │   └── router.py       # Main router
-    ├── schemas                 # Package with data models
-    │   ├── __init__.py         # Package initializer
-    │   ├── healthcheck.py      # Schema for health check response
-    │   └── requests.py         # Schema for API input requests
-    └── services                # Package with business logic
-        ├── __init__.py         # Package initializer
-        ├── model.py            # Logic for working with the ML model
-        └── utils.py            # Helper utilities
+    ├── schemas                 # Pydantic models for validation
+    │   ├── __init__.py
+    │   ├── healthcheck.py      # Response schema for health check
+    │   └── requests.py         # Input schema for prediction
+    └── services
+        ├── __init__.py
+        ├── model.py            # ML model logic
+        └── utils.py            # Utility functions
+```
 
+---
 
-Getting started
+## 🛠️ Getting Started
 
+```bash
 docker-compose up --build
+```
 
+---
 
-web-server on
+## 🌐 Web Interface
 
-http://0.0.0.0:8000
+- **API Base URL:** [http://0.0.0.0:8000](http://0.0.0.0:8000)  
+- **Swagger UI:** [http://0.0.0.0:8000/docs](http://0.0.0.0:8000/docs)
 
+---
 
-swagger ui on
+## 🧪 Sample Test (via `curl`)
 
-http://0.0.0.0:8000/docs
-
-
-For test
-
+```bash
 curl -X 'POST' \
-  'http://0.0.0.0:7007/api/predict/' \
+  'http://0.0.0.0:8000/api/predict/' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
   "text": "Привет, как дела? Что нового?"
 }'
+```
